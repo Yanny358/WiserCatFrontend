@@ -4,7 +4,7 @@
                 <h2>Pets</h2>
             </div>
 
-            <a href="add.html" class="btn btn-primary">Add pet</a>
+            <a [routerLink]="['/newPet']" class="btn btn-primary">Add pet</a>
             <div *ngIf="(pets$ | async) as pets" class="row">
                 <table class="table">
                     <thead>
@@ -23,8 +23,8 @@
                             <td>{{ pet.name }}</td>
                             <td>{{ pet.code }}</td>
                             <td>{{ pet.petType }}</td>
-                            <td>{{ pet.petFurColor}}</td>
-                            <td>{{ pet.petOriginCountry}}</td>
+                            <td>{{ pet.petColor}}</td>
+                            <td>{{ pet.petCountry}}</td>
                             <td>
                                 <a href="add.html" class="btn btn-primary">Edit pet</a>
                             </td>

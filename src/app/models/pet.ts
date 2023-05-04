@@ -3,8 +3,8 @@ export interface Pet {
     code : string
     name: string
     petType: PetType
-    petFurColor: PetFurColor
-    petOriginCountry: PetOriginCountry
+    petColor: PetFurColor
+    petCountry: PetOriginCountry
   }
 
 export enum PetType {
