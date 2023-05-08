@@ -1,16 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { PetDtoIn } from 'src/app/models/petDtoIn';
-import { PetService } from 'src/app/services/pet.service';
+import { Component } from '@angular/core';
+import { Pet } from 'src/app/models/PetDtoOut';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
-  selector: 'app-add-pet',
-  templateUrl: './add-pet.component.html',
-  styleUrls: ['./add-pet.component.css']
+  selector: 'app-edit-pet',
+  templateUrl: './edit-pet.component.html',
+  styleUrls: ['./edit-pet.component.css']
 })
-export class AddPetComponent implements OnInit {
+export class EditPetComponent {
   public readonly baseUrl = environment.backendUrl + '/api/pet';
 
   types: any;
@@ -21,13 +19,15 @@ export class AddPetComponent implements OnInit {
   petType: number = 0;
   petColor: number = 0;
   petCountry: number = 0;
+  petData?: Pet;
 
-  constructor(private petService: PetService, private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.getColors();
     this.getCountries();
     this.getTypes();
+    this.getSinglePet();
   }
 
   getColors() {
@@ -51,15 +51,31 @@ export class AddPetComponent implements OnInit {
     });
   }
 
-  savePet() {
-    this.httpClient.post<PetDtoIn>(this.petService.baseUrl + '/savePet', {
-      userId: sessionStorage.getItem('userId'),
-      code: this.petCode,
-      name: this.petName,
-      petColorId: this.petColor,
-      petCountryId: this.petCountry,
-      petTypeId: this.petType,
+  code: any = sessionStorage.getItem('singlePetCode')
 
+  getSinglePet() {
+    this.httpClient.get(this.baseUrl + '/singlePet?petCode=' + this.code).subscribe(
+      {
+        next: (data) => {
+          this.petData = data as Pet;
+          this.petName = this.petData.name;
+          this.petCode = this.petData.code;
+          this.petType = this.petData.typeId;
+          this.petColor = this.petData.colorId
+          this.petCountry = this.petData.countryId
+          console.log(this.petData)
+        }
+      }
+    )
+  }
+
+  editPet() {
+    this.httpClient.put(this.baseUrl + '/updatePet', {
+      petColorId: this.petColor,
+      petTypeId: this.petType,
+      petCountryId: this.petCountry,
+      name: this.petName,
+      code: this.petCode
     }).subscribe({
       next: () => {
         console.log(this.petCode, this.petName, this.petColor, this.petCountry, this.petType);
@@ -69,5 +85,4 @@ export class AddPetComponent implements OnInit {
       }
     });
   }
-
 }

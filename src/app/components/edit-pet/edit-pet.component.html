@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="mt-0">
+      <div class="row">
+      </div>
+      <h2 class="text-center"> Edit Pet </h2>
+      <div>
+        <div class="col-md-5 mx-auto">
+          <form >
+            <div class="mb-3">
+              <label for="name">Name</label>
+              <div class="input-group">
+                <input [(ngModel)]="petName" type="text" class="form-control" id="name" required="true" placeholder="Name"
+                       name="name">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="code">Code</label>
+              <div class="input-group">
+                <input [(ngModel)]="petCode" type="text" class="form-control disabled text-muted" id="code" required="true"
+                       placeholder="Code" readonly name="code">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="types">Type</label>
+              <select [(ngModel)]="petType" class="form-select d-block w-100" id="types" required="true" name="type">
+                <option *ngFor="let value of types" [value]="value.id">{{value.type}}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="colors">Fur color</label>
+              <select [(ngModel)]="petColor" class="form-select d-block w-100" id="colors" required="true" name="color">
+                <option *ngFor="let value of colors" [value]="value.id">{{value.color}}</option>
+              </select>
+            </div>
+  
+            <div class="mb-3">
+              <label for="countries">Country of origin</label>
+              <select [(ngModel)]="petCountry" class="form-select d-block w-100" id="countries" required="true"
+                      name="country">
+                <option *ngFor="let value of countries" [value]="value.id">{{value.country}}</option>
+              </select>
+            </div>
+            <div class="justify-content-center">
+              <div class="form-group pt-1 col-2 mx-auto">
+                <button (click)="editPet()" class="btn btn-primary col-12" type="submit"  [routerLink]="['/pets']">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
